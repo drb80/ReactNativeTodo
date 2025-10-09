@@ -1,50 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import { registerRootComponent } from 'expo';
 
-const Items = props => {
-  const [data, setData] = React.useState(null);
+import App from './App';
 
-  React.useEffect(() => {
-    const getData = async () => {
-      const b = await fetch('http://localhost:3000/items.json');
-      const c = await b.json();
-      setData(c);
-    }
-    getData();
-  }, []);
-
-  function tableData(item) {
-    return (
-      <>
-        <td>{item.what}</td>
-        <td>{item.when}</td>
-      </>
-    );
-  }
-  
-  function tableRow(item) {
-    return (
-      <tr key={item.id}>
-        { tableData(item) }
-      </tr>
-    );
-  }  
-  
-  return (
-    <table border="1px">
-      <tbody>
-        { data && data.map(item => tableRow (item)) }
-      </tbody>
-    </table>
-  );
-}
-
-const App = () => {
-  return (
-    <ScrollView>
-      <Items/>
-    </ScrollView>
-  );
-};
-
-export default App;
+// registerRootComponent calls AppRegistry.registerComponent('main', () => App);
+// It also ensures that whether you load the app in Expo Go or in a native build,
+// the environment is set up appropriately
+registerRootComponent(App);

@@ -1,0 +1,80 @@
+React Native
+
+React Native (https://reactnative.dev/) is a cross-platform framework that has native extensions for IOS and Android phones and tablets. This allows us to create applications using JavaScript/HTML/CSS that run as if there native.  React Native includes abstractions for the following.
+
+View - a rectangular container, a "<div>" in HTML parlance.
+Text - displays styled text, a "<p>".
+Image - a "<img>".
+ScrollView - a scollable "<div>" that can contain multiple components.
+TextInput - an "input" form element.
+
+Probably the easiest way to start experimenting with React Native is to surf to https://snack.expo.dev and replace the App.js file with the following, which is quite similar to the React application above but with React Native extensions. Make sure you have a Todo API running on port 3000.
+
+import React, { useEffect, useState } from 'react'
+import { ScrollView } from 'react-native'
+
+// Create a set of components using properties
+const Items = props => {
+  // useState is a hook to create a variable React monitors. We call the
+  // mutator setData, and the initial value of the variable is null.
+  const [data, setData] = React.useState(null)
+
+  React.useEffect(() => {
+    const getData = async () => {
+      // Use ES6's fetch
+      const b = await fetch('http://localhost:3000/items.json')
+      const c = await b.json()
+      // Call the setData method from the useState hook
+      setData(c)
+    }
+    getData()
+  // The empty array denotes only calling once
+  }, [])
+
+  // One table datum
+  function tableData (item) {
+    return (
+      <>
+        <td>{item.what}</td>
+        <td>{item.when}</td>
+      </>
+    )
+  }
+
+  // Create a row and call the previous method
+  function tableRow (item) {
+    return (
+      <tr key={item.id}>
+        { tableData(item) }
+      </tr>
+    )
+  }
+
+  // Iterate though all the data using map
+  return (
+    <table border="1px">
+      <tbody>
+        { data && data.map(item => tableRow(item)) }
+      </tbody>
+    </table>
+  )
+}
+
+// Call the above components
+const App = () => {
+  return (
+    <ScrollView>
+      <Items/>
+    </ScrollView>
+  )
+}
+
+export default App
+
+You can also set up a local development environment using the following.
+
+npx create-expo-app ReactNativeTodo
+cd ReactNativeTodo
+npx expo install react-native-web react-dom @expo/metro-runtime
+# Edit App.js to reflect the script above
+npm run web
