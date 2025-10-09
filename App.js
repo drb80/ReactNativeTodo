@@ -92,7 +92,7 @@ const App = () => {
           options={{
             title: 'My Items',
             headerStyle: {
-              backgroundColor: 'darkblue',
+              backgroundColor: 'blue',
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
