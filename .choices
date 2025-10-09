@@ -1,0 +1,5 @@
+npm remove @radix-ui/react-select &&  npm install @radix-ui/react-select
+npm install @radix-ui/react-dialog
+npm cache clean --force
+npm run web
+npm run ios
